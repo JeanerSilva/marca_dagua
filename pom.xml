@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+  <groupId>com.example</groupId>
+  <artifactId>marcadagua</artifactId>
+  <version>1.0</version>
+
+  <name>marcadagua</name>
+    <url>http://www.example.com</url>
+
+  <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itextpdf</artifactId>
+      <version>5.5.6</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tika</groupId>
+        <artifactId>tika-core</artifactId>
+        <version>2.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+      <version>2.0.6</version>
+    </dependency>
+        <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>2.0.24</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+      <plugins>   
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+            <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+            <finalName>insere_marca_dagua_windows</finalName>
+            <appendAssemblyId>false</appendAssemblyId>
+            <archive>
+                <manifest>
+                    <mainClass>com.example.App</mainClass>
+                </manifest>
+            </archive>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>single</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+      </plugins>       
+  </build>
+</project>
+
+
