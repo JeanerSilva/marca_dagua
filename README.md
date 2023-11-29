@@ -11,18 +11,17 @@ Para compilar usar: mvn clean compile assembly:single
 
 
 ## Utilização
-Windows:
-Abrir o arquivo com Java(TM) Platform SE binary
+### Windows:
+- Abrir o arquivo com Java(TM) Platform SE binary
+- Selecionar o arquivo em "Selecionar PDF"
+- Indicar a marca.
+- Clicar em "Inserir marca"
 
-Selecionar o arquivo em "Selecionar PDF"
-Indicar a marca.
-Clicar em "Inserir marca"
 
+### CLI:
+- java -jar insere_marca_dagua.jar <nome_do_arquivo.pdf> "marca d'água a ser inserida no arquivo"
 
-CLI:
-java -jar insere_marca_dagua.jar <nome_do_arquivo.pdf> "marca d'água a ser inserida no arquivo"
-
-java -jar target/insere_marca_dagua.jar teste.pdf "marca d'água de teste"
+- java -jar target/insere_marca_dagua.jar teste.pdf "marca d'água de teste"
 
 ## Correções
 
