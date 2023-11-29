@@ -32,12 +32,12 @@ public class CriaMarcaDagua {
 		float x = 0, y = 0;
 		reader = new PdfReader(src);
 		stamper = new PdfStamper(reader, new FileOutputStream(novoNomeDoArquivo));		
-		textArea.append("\nInserindo a marca " + text + " no arquivo " + novoNomeDoArquivo);
+		if (null != textArea) {textArea.append("\nInserindo a marca " + text + " no arquivo " + novoNomeDoArquivo);}
 		System.out.print("\nPágina(s): ");
-		textArea.append("\nPágina(s): ");
+		if (null != textArea) {textArea.append("\nPágina(s): ");}
 		for (int i = 1; i <= n; i++) {
 			if (i != n) System.out.print(i+", "); else System.out.print(i+".");
-			if (i != n) textArea.append(i+", "); else   textArea.append(i+".");
+			if (null != textArea) {if (i != n) textArea.append(i+", "); else   textArea.append(i+".");}
 			pagesize = reader.getPageSizeWithRotation(i);
 			float vertical = (float) (pagesize.getTop() * (1 + Math.sin(rotation)));
 			String textoAserImpresso = text;
@@ -58,8 +58,8 @@ public class CriaMarcaDagua {
 		stamper.close();
 		reader.close();		
 		System.out.print("\n\nMarca inserida com sucesso.\n\n");
-		textArea.append("\nSalvo arquivo com nome"+novoNomeDoArquivo+ ".\n");
-		textArea.append("Marca d'agua inserida com sucesso.\n");
+		if (null != textArea) {textArea.append("\nSalvo arquivo com nome"+novoNomeDoArquivo+ ".\n");}
+		if (null != textArea) {textArea.append("Marca d'agua inserida com sucesso.\n");}
 		
 	}
 

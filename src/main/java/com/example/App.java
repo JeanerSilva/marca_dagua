@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -31,20 +30,50 @@ public class App
     static String marcaDaguaString = "";
     
 	public static void main(String[] args) throws IOException, DocumentException {
-		
-            SwingUtilities.invokeLater(() -> {
+		String DIR = "";
+    if (args.length == 0) {
+      SwingUtilities.invokeLater(() -> {
       try {
         createAndShowGUI();
-      } catch (URISyntaxException e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
-    });
-      
+    });     
+  } else {
+      // Há argumentos da linha de comando, execute a lógica da linha de comando aqui
+      if (args.length > 1) {             
+        if (null != args[1]) {
+            String nomeDoArquivo = args[0];
+
+            File file = new File(nomeDoArquivo);
+            if (file.exists()) {                        
+                if (new VerificarPDF().verificaSeArquivoEhPDF(nomeDoArquivo)) {                        
+                    String marca = " "; 
+                    for (String arg : args) {
+                        if (arg != args[0]) marca += arg + " "; 
+                    }                    
+                    System.out.println("\nCEPESC, 2023. Insere marca d'água em arquivos PDF. Versão 0.1 - 11421");
+                    System.out.println("\nInserindo a marca d'água \"" + marca.trim() + "\" no arquivo " + nomeDoArquivo + ".");
+                    new CriaMarcaDagua().criaMarcaDaguaFile(marca, 6, 45, DIR + nomeDoArquivo, null);  
+                } else {
+                    System.out.println("\n\n\n O arquivo \"" + nomeDoArquivo +"\" não é um arquivo PDF válido.");        
+                }
+            } else {
+                System.out.println("\n\n\n Arquivo \"" + nomeDoArquivo +"\" não encontrado.\n\n\n");        
+            }
+        }
+    } else {
+        System.out.println("\n\n\nArgumentos incompletos. \nMarca d'água ausente. \nInforme: java -jar criamarcadagua.jar nome_do_arguivo.pdf \"marca a ser impressa\".\n\n\n");
+    } 
+
+  }
+
+   
     
     }
 
 
- private static void createAndShowGUI() throws URISyntaxException {
+ private static void createAndShowGUI() {
 
     System.setProperty("awt.useSystemAAFontSettings", "on");
     System.setProperty("swing.aatext", "true");
@@ -103,7 +132,6 @@ public class App
     buttonInserirMarca.setEnabled(false);
     buttonLimpar.setEnabled(false);
     
-
     buttonSelecionaDiretorio.addActionListener(e -> {
       selectedFile = selecionarDiretorio(frame);
       if (selectedFile != null) {
@@ -139,43 +167,20 @@ public class App
     marcaDagua.getDocument().addDocumentListener(new DocumentListener() {
       @Override
       public void removeUpdate(final DocumentEvent paramDocumentEvent) {
-          if (marcaDagua.getText().isEmpty()) {
-            buttonInserirMarca.setEnabled(false);
-          } else {
-          buttonInserirMarca.setEnabled(true);
-          }
-      }
-  
+        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());         
+      }  
       @Override
       public void insertUpdate(final DocumentEvent paramDocumentEvent) {
-         if (marcaDagua.getText().isEmpty()) {
-            buttonInserirMarca.setEnabled(false);
-            
-          } else {
-          marcaDaguaString = marcaDagua.getText();
-          buttonInserirMarca.setEnabled(true);
-          }
+         buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());                 
       }
   
       @Override
       public void changedUpdate(final DocumentEvent paramDocumentEvent) {
-         if (marcaDagua.getText().isEmpty()) {
-          
-            buttonInserirMarca.setEnabled(false);
-          } else {
-          marcaDaguaString = marcaDagua.getText();
-          buttonInserirMarca.setEnabled(true);
-          }
-      }
+        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());         
+    }
   });
-    
-     
-
-
-    frame.setVisible(true);
+        frame.setVisible(true);
   }
-
-
 
   private static File selecionarDiretorio(JFrame frame) {
     JFileChooser fileChooser = new JFileChooser();
