@@ -139,7 +139,7 @@ public class App
     marcaDagua.getDocument().addDocumentListener(new DocumentListener() {
       @Override
       public void removeUpdate(final DocumentEvent paramDocumentEvent) {
-          if (marcaDagua.getText().isBlank() || marcaDagua.getText().isEmpty()) {
+          if (marcaDagua.getText().isEmpty()) {
             buttonInserirMarca.setEnabled(false);
           } else {
           buttonInserirMarca.setEnabled(true);
@@ -148,7 +148,7 @@ public class App
   
       @Override
       public void insertUpdate(final DocumentEvent paramDocumentEvent) {
-         if (marcaDagua.getText().isBlank() || marcaDagua.getText().isEmpty()) {
+         if (marcaDagua.getText().isEmpty()) {
             buttonInserirMarca.setEnabled(false);
             
           } else {
@@ -159,7 +159,7 @@ public class App
   
       @Override
       public void changedUpdate(final DocumentEvent paramDocumentEvent) {
-         if (marcaDagua.getText().isBlank() || marcaDagua.getText().isEmpty()) {
+         if (marcaDagua.getText().isEmpty()) {
           
             buttonInserirMarca.setEnabled(false);
           } else {
