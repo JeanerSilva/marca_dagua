@@ -23,57 +23,55 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.itextpdf.text.DocumentException;
 
-public class App 
-{
+public class App {
 
-    private static File selectedFile = null;
-    static String marcaDaguaString = "";
-    
-	public static void main(String[] args) throws IOException, DocumentException {
-		String DIR = "";
+  private static File selectedFile = null;
+  static String marcaDaguaString = "";
+
+  public static void main(String[] args) throws IOException, DocumentException {
+    String DIR = "";
     if (args.length == 0) {
       SwingUtilities.invokeLater(() -> {
-      try {
-        createAndShowGUI();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    });     
-  } else {
-      // Há argumentos da linha de comando, execute a lógica da linha de comando aqui
-      if (args.length > 1) {             
-        if (null != args[1]) {
-            String nomeDoArquivo = args[0];
-
-            File file = new File(nomeDoArquivo);
-            if (file.exists()) {                        
-                if (new VerificarPDF().verificaSeArquivoEhPDF(nomeDoArquivo)) {                        
-                    String marca = " "; 
-                    for (String arg : args) {
-                        if (arg != args[0]) marca += arg + " "; 
-                    }                    
-                    System.out.println("\nCEPESC, 2023. Insere marca d'água em arquivos PDF. Versão 0.1 - 11421");
-                    System.out.println("\nInserindo a marca d'água \"" + marca.trim() + "\" no arquivo " + nomeDoArquivo + ".");
-                    new CriaMarcaDagua().criaMarcaDaguaFile(marca, 6, 45, DIR + nomeDoArquivo, null);  
-                } else {
-                    System.out.println("\n\n\n O arquivo \"" + nomeDoArquivo +"\" não é um arquivo PDF válido.");        
-                }
-            } else {
-                System.out.println("\n\n\n Arquivo \"" + nomeDoArquivo +"\" não encontrado.\n\n\n");        
-            }
+        try {
+          createAndShowGUI();
+        } catch (Exception e) {
+          e.printStackTrace();
         }
+      });
     } else {
-        System.out.println("\n\n\nArgumentos incompletos. \nMarca d'água ausente. \nInforme: java -jar criamarcadagua.jar nome_do_arguivo.pdf \"marca a ser impressa\".\n\n\n");
-    } 
+      if (args.length > 1) {
+        if (null != args[1]) {
+          String nomeDoArquivo = args[0];
+
+          File file = new File(nomeDoArquivo);
+          if (file.exists()) {
+            if (new VerificarPDF().verificaSeArquivoEhPDF(nomeDoArquivo)) {
+              String marca = " ";
+              for (String arg : args) {
+                if (arg != args[0])
+                  marca += arg + " ";
+              }
+              System.out.println("\nCEPESC, 2023. Insere marca d'água em arquivos PDF. Versão 0.1 - 11421");
+              System.out
+                  .println("\nInserindo a marca d'água \"" + marca.trim() + "\" no arquivo " + nomeDoArquivo + ".");
+              new CriaMarcaDagua().criaMarcaDaguaFile(marca, 6, 45, DIR + nomeDoArquivo, null);
+            } else {
+              System.out.println("\n\n\n O arquivo \"" + nomeDoArquivo + "\" não é um arquivo PDF válido.");
+            }
+          } else {
+            System.out.println("\n\n\n Arquivo \"" + nomeDoArquivo + "\" não encontrado.\n\n\n");
+          }
+        }
+      } else {
+        System.out.println(
+            "\n\n\nArgumentos incompletos. \nMarca d'água ausente. \nInforme: java -jar criamarcadagua.jar nome_do_arguivo.pdf \"marca a ser impressa\".\n\n\n");
+      }
+
+    }
 
   }
 
-   
-    
-    }
-
-
- private static void createAndShowGUI() {
+  private static void createAndShowGUI() {
 
     System.setProperty("awt.useSystemAAFontSettings", "on");
     System.setProperty("swing.aatext", "true");
@@ -91,8 +89,7 @@ public class App
 
     JScrollPane scrollPane = new JScrollPane(textArea);
     scrollPane.setVerticalScrollBarPolicy(
-      ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS
-    );
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
     textArea.setFont(new Font("Arial", Font.BOLD, 14));
     textArea.setBounds(5, 100, 1170, 570);
@@ -101,10 +98,9 @@ public class App
     panel.add(scrollPane, BorderLayout.CENTER);
 
     JSplitPane splitPane = new JSplitPane(
-      JSplitPane.HORIZONTAL_SPLIT,
-      layeredPane,
-      panel
-    );
+        JSplitPane.HORIZONTAL_SPLIT,
+        layeredPane,
+        panel);
     splitPane.setDividerLocation(300);
     frame.add(splitPane);
 
@@ -112,17 +108,15 @@ public class App
     JButton buttonInserirMarca = new JButton("Inserir marca");
     JButton buttonLimpar = new JButton("Limpar");
 
-    buttonSelecionaDiretorio.setBounds(30, 50, 150, 50); // x, y, largura, altura
-    buttonInserirMarca.setBounds(30, 110, 150, 50); // x, y, largura, altura
+    buttonSelecionaDiretorio.setBounds(30, 50, 150, 50); 
+    buttonInserirMarca.setBounds(30, 110, 150, 50); 
     buttonLimpar.setBounds(30, 170, 150, 50);
 
-       
     JLabel marcaDaguaLabel = new JLabel("Marca d'água");
     marcaDaguaLabel.setBounds(30, 290, 200, 20);
     JTextArea marcaDagua = new JTextArea();
     marcaDagua.setBounds(30, 320, 250, 40);
     marcaDagua.setFont(new Font("Arial", Font.BOLD, 14));
-
 
     layeredPane.add(buttonSelecionaDiretorio, JLayeredPane.DEFAULT_LAYER);
     layeredPane.add(buttonInserirMarca, JLayeredPane.PALETTE_LAYER);
@@ -131,14 +125,12 @@ public class App
     layeredPane.add(marcaDagua);
     buttonInserirMarca.setEnabled(false);
     buttonLimpar.setEnabled(false);
-    
+
     buttonSelecionaDiretorio.addActionListener(e -> {
       selectedFile = selecionarDiretorio(frame);
       if (selectedFile != null) {
         buttonLimpar.setEnabled(true);
-        SwingUtilities.invokeLater(() ->
-      textArea.append("Selecionado arquivo : " + selectedFile + "\n")
-    );
+        SwingUtilities.invokeLater(() -> textArea.append("Selecionado arquivo : " + selectedFile + "\n"));
       } else {
         buttonInserirMarca.setEnabled(false);
         buttonLimpar.setEnabled(false);
@@ -146,15 +138,15 @@ public class App
     });
 
     buttonInserirMarca.addActionListener(e -> {
-      new Thread(() -> {    
+      new Thread(() -> {
         try {
           textArea.append("Iniciando o processo. Aguarde...");
           new CriaMarcaDagua().criaMarcaDaguaFile(marcaDaguaString, 6, 45, selectedFile.getAbsolutePath(), textArea);
         } catch (IOException | DocumentException e1) {
           e1.printStackTrace();
-        }   
+        }
       })
-        .start();
+          .start();
     });
 
     buttonLimpar.addActionListener(e -> {
@@ -167,37 +159,36 @@ public class App
     marcaDagua.getDocument().addDocumentListener(new DocumentListener() {
       @Override
       public void removeUpdate(final DocumentEvent paramDocumentEvent) {
-        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty()); 
+        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());
         marcaDaguaString = marcaDagua.getText();
-      }  
+      }
+
       @Override
       public void insertUpdate(final DocumentEvent paramDocumentEvent) {
-         buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());                 
-         marcaDaguaString = marcaDagua.getText();
+        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());
+        marcaDaguaString = marcaDagua.getText();
       }
-  
+
       @Override
       public void changedUpdate(final DocumentEvent paramDocumentEvent) {
-        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());         
+        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());
         marcaDaguaString = marcaDagua.getText();
-    }
-  });
-        frame.setVisible(true);
+      }
+    });
+    frame.setVisible(true);
   }
 
   private static File selecionarDiretorio(JFrame frame) {
     JFileChooser fileChooser = new JFileChooser();
- 
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos PDF", "pdf");
-        fileChooser.setFileFilter(filter);
 
-        int returnValue = fileChooser.showOpenDialog(frame);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile();
-        } else {
-        }  
-        return null;
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos PDF", "pdf");
+    fileChooser.setFileFilter(filter);
+
+    int returnValue = fileChooser.showOpenDialog(frame);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+      return fileChooser.getSelectedFile();
+    }
+    return null;
   }
 
-	}
-
+}
