@@ -167,16 +167,19 @@ public class App
     marcaDagua.getDocument().addDocumentListener(new DocumentListener() {
       @Override
       public void removeUpdate(final DocumentEvent paramDocumentEvent) {
-        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());         
+        buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty()); 
+        marcaDaguaString = marcaDagua.getText();
       }  
       @Override
       public void insertUpdate(final DocumentEvent paramDocumentEvent) {
          buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());                 
+         marcaDaguaString = marcaDagua.getText();
       }
   
       @Override
       public void changedUpdate(final DocumentEvent paramDocumentEvent) {
         buttonInserirMarca.setEnabled(!marcaDagua.getText().isEmpty());         
+        marcaDaguaString = marcaDagua.getText();
     }
   });
         frame.setVisible(true);
