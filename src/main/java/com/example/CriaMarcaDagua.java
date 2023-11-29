@@ -73,7 +73,7 @@ public class CriaMarcaDagua {
 		reader.close();
 		System.out.print("\n\nMarca inserida com sucesso.\n\n");
 		if (null != textArea) {
-			textArea.append("\nSalvo arquivo com nome" + novoNomeDoArquivo + ".\n");
+			textArea.append("\nSalvo arquivo em " + novoNomeDoArquivo + ".\n");
 		}
 		if (null != textArea) {
 			textArea.append("Marca d'agua inserida com sucesso.\n");
